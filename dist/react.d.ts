@@ -1,5 +1,15 @@
-import { type ComponentType, type SVGProps } from "react";
+import { type ComponentType, type HTMLAttributes, type SVGProps } from "react";
+import { type AgentAvatarSize, type AgentAvatarStatus } from "./avatar.js";
 import { type IconName } from "./icons.js";
+export interface AgentAvatarProps extends Omit<HTMLAttributes<HTMLSpanElement>, "children"> {
+    name: string;
+    seed?: string;
+    size?: AgentAvatarSize;
+    status?: AgentAvatarStatus;
+    decorative?: boolean;
+    label?: string;
+}
+export declare const AgentAvatar: import("react").ForwardRefExoticComponent<AgentAvatarProps & import("react").RefAttributes<HTMLSpanElement>>;
 export interface HyperIconProps extends SVGProps<SVGSVGElement> {
     name: IconName;
     size?: string | number;

@@ -1,6 +1,72 @@
-import { createElement, forwardRef, type ComponentType, type SVGProps } from "react"
+import {
+  createElement,
+  forwardRef,
+  type ComponentType,
+  type CSSProperties,
+  type HTMLAttributes,
+  type SVGProps,
+} from "react"
 
+import {
+  createAgentAvatarProfile,
+  resolveAgentAvatarSize,
+  type AgentAvatarSize,
+  type AgentAvatarStatus,
+} from "./avatar.js"
 import { iconDefinitions, type IconName } from "./icons.js"
+
+type AvatarStyle = CSSProperties & Record<`--hs-agent-avatar-${string}`, string>
+
+export interface AgentAvatarProps extends Omit<HTMLAttributes<HTMLSpanElement>, "children"> {
+  name: string
+  seed?: string
+  size?: AgentAvatarSize
+  status?: AgentAvatarStatus
+  decorative?: boolean
+  label?: string
+}
+
+export const AgentAvatar = forwardRef<HTMLSpanElement, AgentAvatarProps>(function AgentAvatar(
+  { name, seed = name, size = "md", status, decorative = false, label, className, style, title, ...props },
+  ref,
+) {
+  const profile = createAgentAvatarProfile(seed)
+  const pixelSize = resolveAgentAvatarSize(size)
+  const avatarStyle: AvatarStyle = {
+    "--hs-agent-avatar-size": `${pixelSize}px`,
+    "--hs-agent-avatar-base": profile.palette.base,
+    "--hs-agent-avatar-accent": profile.palette.accent,
+    "--hs-agent-avatar-glow": profile.palette.glow,
+    "--hs-agent-avatar-visor": profile.palette.visor,
+    "--hs-agent-avatar-feature": profile.palette.feature,
+    "--hs-agent-avatar-tilt": `${profile.tilt}deg`,
+    ...style,
+  }
+  const accessibleLabel = label ?? `${name}, агент`
+
+  return <span
+    ref={ref}
+    className={["hs-agent-avatar", className].filter(Boolean).join(" ")}
+    data-variant={profile.variant}
+    data-antenna={profile.antenna}
+    style={avatarStyle}
+    title={title ?? (decorative ? undefined : accessibleLabel)}
+    aria-hidden={decorative || undefined}
+    aria-label={decorative ? undefined : accessibleLabel}
+    role={decorative ? undefined : "img"}
+    {...props}
+  >
+    <span className="hs-agent-avatar__antenna" aria-hidden="true" />
+    <span className="hs-agent-avatar__face" aria-hidden="true">
+      <span className="hs-agent-avatar__eyes">
+        <i className="hs-agent-avatar__eye" />
+        <i className="hs-agent-avatar__eye" />
+      </span>
+      <i className="hs-agent-avatar__mouth" />
+    </span>
+    {status ? <span className="hs-agent-avatar__status" data-status={status} aria-hidden="true" /> : null}
+  </span>
+})
 
 export interface HyperIconProps extends SVGProps<SVGSVGElement> {
   name: IconName

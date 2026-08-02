@@ -83,13 +83,32 @@ button.innerHTML = renderIconSvg("copy", {
 
 В набор входят 27 иконок: `archive`, `brain`, `chat`, `check`, `close`, `copy`, `eye`, `file`, `files`, `menu`, `mic`, `more`, `panelClose`, `panelOpen`, `paperclip`, `pencil`, `pin`, `plus`, `refresh`, `search`, `send`, `services`, `settings`, `stop`, `trash`, `voice`, `volume`.
 
+## Процедурные аватары агентов
+
+Аватары генерируются локально и детерминированно из имени или стабильного `seed`:
+один агент всегда получает одно лицо, палитру и детали. Сеть, хранение изображений
+и внешний AI API не нужны. На маленьких размерах используется контрастное лицо,
+а не плохо читаемая буква.
+
+```tsx
+import { AgentAvatar } from "@hyperserver/design-system/react"
+import "@hyperserver/design-system/components.css"
+
+<AgentAvatar name="Александр" seed="agent-42" size="md" status="online" />
+<AgentAvatar name="Мария" size={60} decorative />
+```
+
+Размеры: `xs`, `sm`, `md`, `lg`, `xl` или число пикселей. Статусы: `online`,
+`busy`, `offline`. Компонент по умолчанию доступен скринридеру; для повторяющейся
+декоративной аватарки передайте `decorative`.
+
 ## Разработка и выпуск версии
 
 ```bash
 npm install
 npm test
 npm run build
-git tag v0.1.0
+git tag v0.2.0
 git push origin main --tags
 ```
 

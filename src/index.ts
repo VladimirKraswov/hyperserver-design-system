@@ -25,3 +25,16 @@ export {
   type IconNode,
   type RenderIconOptions,
 } from "./icons.js"
+
+export {
+  agentAvatarPaletteNames,
+  agentAvatarPalettes,
+  createAgentAvatarProfile,
+  hashAgentAvatarSeed,
+  resolveAgentAvatarSize,
+  type AgentAvatarPalette,
+  type AgentAvatarPaletteName,
+  type AgentAvatarProfile,
+  type AgentAvatarSize,
+  type AgentAvatarStatus,
+} from "./avatar.js"

@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises"
+import { copyFile, mkdir, writeFile } from "node:fs/promises"
 import { themes, themeTokenNames } from "../dist/themes.js"
 
 const declaration = (definition) => [
@@ -24,3 +24,4 @@ ${declaration(themes["ember-dark"])}
 const dist = new URL("../dist/", import.meta.url)
 await mkdir(dist, { recursive: true })
 await writeFile(new URL("themes.css", dist), css)
+await copyFile(new URL("../src/avatar.css", import.meta.url), new URL("components.css", dist))

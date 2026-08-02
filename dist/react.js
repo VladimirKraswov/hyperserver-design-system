@@ -1,6 +1,23 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { createElement, forwardRef } from "react";
+import { createElement, forwardRef, } from "react";
+import { createAgentAvatarProfile, resolveAgentAvatarSize, } from "./avatar.js";
 import { iconDefinitions } from "./icons.js";
+export const AgentAvatar = forwardRef(function AgentAvatar({ name, seed = name, size = "md", status, decorative = false, label, className, style, title, ...props }, ref) {
+    const profile = createAgentAvatarProfile(seed);
+    const pixelSize = resolveAgentAvatarSize(size);
+    const avatarStyle = {
+        "--hs-agent-avatar-size": `${pixelSize}px`,
+        "--hs-agent-avatar-base": profile.palette.base,
+        "--hs-agent-avatar-accent": profile.palette.accent,
+        "--hs-agent-avatar-glow": profile.palette.glow,
+        "--hs-agent-avatar-visor": profile.palette.visor,
+        "--hs-agent-avatar-feature": profile.palette.feature,
+        "--hs-agent-avatar-tilt": `${profile.tilt}deg`,
+        ...style,
+    };
+    const accessibleLabel = label ?? `${name}, агент`;
+    return _jsxs("span", { ref: ref, className: ["hs-agent-avatar", className].filter(Boolean).join(" "), "data-variant": profile.variant, "data-antenna": profile.antenna, style: avatarStyle, title: title ?? (decorative ? undefined : accessibleLabel), "aria-hidden": decorative || undefined, "aria-label": decorative ? undefined : accessibleLabel, role: decorative ? undefined : "img", ...props, children: [_jsx("span", { className: "hs-agent-avatar__antenna", "aria-hidden": "true" }), _jsxs("span", { className: "hs-agent-avatar__face", "aria-hidden": "true", children: [_jsxs("span", { className: "hs-agent-avatar__eyes", children: [_jsx("i", { className: "hs-agent-avatar__eye" }), _jsx("i", { className: "hs-agent-avatar__eye" })] }), _jsx("i", { className: "hs-agent-avatar__mouth" })] }), status ? _jsx("span", { className: "hs-agent-avatar__status", "data-status": status, "aria-hidden": "true" }) : null] });
+});
 export const HyperIcon = forwardRef(function HyperIcon({ name, size = 24, title, children: _children, ...props }, ref) {
     const accessible = Boolean(title || props["aria-label"]);
     return _jsxs("svg", { ref: ref, viewBox: "0 0 24 24", width: size, height: size, fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": accessible ? undefined : true, role: accessible ? "img" : undefined, ...props, children: [title && _jsx("title", { children: title }), iconDefinitions[name].nodes.map(([tag, attributes], index) => createElement(tag, { ...attributes, key: index }))] });

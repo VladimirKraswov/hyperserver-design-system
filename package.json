@@ -1,7 +1,7 @@
 {
   "name": "@hyperserver/design-system",
-  "version": "0.1.0",
-  "description": "Shared HyperServer themes, design tokens and framework-independent icons with React bindings.",
+  "version": "0.2.0",
+  "description": "Shared HyperServer themes, procedural agent avatars and framework-independent icons with React bindings.",
   "type": "module",
   "license": "MIT",
   "author": "Vladimir Krasov",
@@ -15,7 +15,7 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "sideEffects": ["./dist/themes.css"],
+  "sideEffects": ["./dist/themes.css", "./dist/components.css"],
   "files": ["dist", "README.md", "LICENSE"],
   "exports": {
     ".": {
@@ -30,7 +30,8 @@
       "types": "./dist/react.d.ts",
       "import": "./dist/react.js"
     },
-    "./themes.css": "./dist/themes.css"
+    "./themes.css": "./dist/themes.css",
+    "./components.css": "./dist/components.css"
   },
   "scripts": {
     "clean": "node scripts/clean.mjs",
