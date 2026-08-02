@@ -1,0 +1,62 @@
+{
+  "name": "@hyperserver/design-system",
+  "version": "0.1.0",
+  "description": "Shared HyperServer themes, design tokens and framework-independent icons with React bindings.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Vladimir Krasov",
+  "homepage": "https://github.com/VladimirKraswov/hyperserver-design-system#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VladimirKraswov/hyperserver-design-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VladimirKraswov/hyperserver-design-system/issues"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": ["./dist/themes.css"],
+  "files": ["dist", "README.md", "LICENSE"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./icons": {
+      "types": "./dist/icons.d.ts",
+      "import": "./dist/icons.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./themes.css": "./dist/themes.css"
+  },
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build": "npm run clean && tsc -p tsconfig.json && node scripts/build-css.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json",
+    "test": "vitest run src",
+    "pack:check": "npm run build && npm pack --dry-run",
+    "prepublishOnly": "npm run test && npm run pack:check"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "react": "19.2.8",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
